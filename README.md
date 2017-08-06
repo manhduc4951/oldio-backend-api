@@ -1,4 +1,4 @@
-Backend + mobile API service for OnlineDio (for backup only)
+Backend + mobile API service for OlDio (for backup only)
 ============================================================
 
 
