@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html" />
+	<meta name="author" content="qwerty" />
+	<title>Email from OnlineDio</title>
+</head>
+
+<body style="margin: 0; padding: 0; font-size: 16px; font-family: Helvetica Neue,sans-serif;">
+<div style="width: 650px;">
+    <div style="background-color: #ffd700;border-bottom:2px solid black;height: 81px;padding-right:25px;">
+        <img alt="image" src="<?php echo $this->getS3Url('onlinedio_logo_email.png','image') ?>" style="margin-top: 15px;margin-left:30px;"/>
+        <span style="float: right;line-height:81px;"><?php echo date('F d, Y') ?></span>
+    </div>
+    <div style="background-color: #404040;border-bottom:2px solid black;padding-left:30px;padding-top:50px;padding-bottom:60px;color:white;">
+        <span style="display: block;margin-bottom:50px;">Hi OnlineDio user,</span>
+        <?php echo $content ?>
+        <span style="display: block;margin-bottom:12px;margin-top:50px;">Your sincerely,</span>        
+        <span style="display: block;">The OnlineDio Team</span>
+    </div>
+    <div style="background-color: #404040;color: #b4b4b4;font-size:10px;padding-left:30px;padding-top:10px;padding-bottom:8px;">
+        <div style="display: inline-block; width:270px; vertical-align:top;">
+            <span style="display: block;margin-bottom:5px;">Our website: <a style="color:#ffe000;margin-left:35px;text-decoration:none;" href="http://www.onlinedio.com">http://www.onlinedio.com</a></span>
+            <span>OnlineDio contact: <a href="mailto:support@onlinedio.com" style="color: #ffe000;margin-left:5px;text-decoration:none;">support@onlinedio.com</a></span>
+        </div>
+        <div style="display: inline-block;width:300px">
+            <img src="<?php echo $this->getS3Url('facebook icon.png','image') ?>" alt="facebook icon" />
+            <span style="float: right;width:269px;">Join us on Facebook page and be sure to click on <span style="color: #5995ff;">'Like'</span> to keep us up-to-date with special offers and the lastest news from OnlineDio.</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

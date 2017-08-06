@@ -1,0 +1,36 @@
+<?php
+$title = 'Edit soundset';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('sound-set', array('action' => 'edit','id' => $this->id)));
+$form->setAttribute('class','form-horizontal');
+$form->prepare();
+?>
+<?php $formElements = array('name','creation','price','image','zip_file','code','description') ?>
+<?php echo $this->form()->openTag($form); ?>
+<?php echo $this->formRow($form->get('id')); ?>
+<table class="grid">
+    <?php foreach($formElements as $formElement): ?>
+    <tr>
+        <th style="width: 20%;"><?php echo $this->formLabel($form->get($formElement)); ?></th>
+        <td>
+            <?php echo $this->formElement($form->get($formElement)); ?>
+            <?php if($this->formElementErrors($form->get($formElement))): ?>
+            <?php echo $this->formElementErrors($form->get($formElement)) ?>
+            <?php endif; ?>
+            <?php if($formElement == 'image' && ($files['image'])): ?>
+            <a class="zoom-image" href="<?php echo $files[$formElement] ?>">
+            <img class="image-form" src="<?php echo $files[$formElement] ?>" alt="image soundset" />
+            </a>
+            <?php endif; ?>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+    <tr>
+        <td class="search-button" colspan="2"><?php echo $this->formElement($form->get('submit')); ?></td>
+    </tr>
+</table>
+<?php echo $this->form()->closeTag(); ?>

@@ -1,0 +1,95 @@
+<?php
+if($messages) {
+    foreach($messages as $message) {
+        echo "<div class='alert alert-success'>$message</div>";
+    }
+}
+?>
+<h1>SoundSet Management</h1>
+
+<?php
+$form = $this->formSearch;
+$form->setAttribute('action',$this->url('sound-set',array('action'=>'index')));
+$form->setAttribute('method','get');
+$form->prepare();
+?>
+<?php echo $this->form()->openTag($form); ?>
+<table class="grid search">
+    <tr>
+        <th class="span2"><?php echo $this->formLabel($form->get('name')); ?></th>
+        <td class="span4"><?php echo $this->formElement($form->get('name')); ?></td>
+        <th class="span2"><?php echo $this->formLabel($form->get('description')); ?></th>
+        <td class="span4"><?php echo $this->formElement($form->get('description')); ?></td>
+    </tr>
+    <tr>
+        <th><?php echo $this->formLabel($form->get('creation')); ?></th>
+        <td><?php echo $this->formElement($form->get('creation')); ?></td>
+        <th><?php echo $this->formLabel($form->get('created_at')); ?></th>
+        <td><?php echo $this->formElement($form->get('created_at')); ?></td>
+    </tr>
+    <tr>
+        <th><?php echo $this->formLabel($form->get('price_from')); ?></th>
+        <td>
+            <?php echo $this->formElement($form->get('price_from')); ?> to
+            <?php echo $this->formElement($form->get('price_to')); ?>
+        </td>
+        <td class="search-button" colspan="2"><?php echo $this->formElement($form->get('submit')); ?></td>
+    </tr>
+</table>
+<?php echo $this->form()->closeTag(); ?>
+
+<?php if($permissions['add']): ?>
+<a class="btn btn-primary add-entity" href="<?php echo $this->url('sound-set',array('action' => 'add')) ?>">Add</a>
+<?php endif; ?>
+
+<table class="table table-striped table-bordered">
+    <thead id="thead">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>Creation</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($soundSets as $soundSet): ?>
+        <tr>
+            <td class="span1"><?php echo $soundSet->id ?></td>
+            <td class="span2"><?php echo $soundSet->name ?></td>
+            <td class="span3"><?php echo $this->wordLimit($soundSet->description) ?></td>
+            <td class="span2 text-center">
+                <?php if($soundSet->image): ?>
+                <a class="zoom-image" href="<?php echo $this->getS3Url($soundSet->image,'sound_set_image_upload_s3') ?>">
+                <img class="image-listing" src="<?php echo $this->getS3Url($soundSet->image,'sound_set_image_upload_s3') ?>" alt="soundset image" />
+                </a>
+                <?php endif; ?>
+            </td>
+            <td class="span1"><?php echo ($soundSet->price && $soundSet->price > 0) ? $soundSet->price.'$' : 'Free' ?></td>
+            <td class="span1"><?php echo $soundSet->creation ?></td>
+            <td class="span2">
+                <?php if($permissions['edit']): ?>
+                <a href="<?php echo $this->url('sound-set',array('action' => 'edit','id' => $soundSet->id)) ?>"><i class="icon-pencil"></i>Edit</a>
+                <?php endif; ?>
+                <?php if($permissions['delete']): ?>
+                <a class="delete" href="<?php echo $this->url('sound-set',array('action' => 'delete','id' => $soundSet->id)) ?>"><i class="icon-remove"></i>Del</a>
+                <?php endif; ?>
+                <?php if($permissions['view']): ?>
+                <a href="<?php echo $this->url('sound-set',array('action' => 'view','id' => $soundSet->id)) ?>"><i class="icon-eye-open"></i>View</a>
+                <?php endif; ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+        <?php if(!count($soundSets)): ?>
+        <tr>
+            <td colspan="7">No data</td>
+        </tr>
+        <?php endif; ?>
+    </tbody>
+</table>
+
+<?php 
+    echo $this->paginationControl($this->soundSets,'sliding',array('partial/paginator.phtml', 'SoundSet'),array('route' => 'sound-set'));
+?>

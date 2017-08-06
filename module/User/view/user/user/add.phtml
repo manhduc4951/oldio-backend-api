@@ -1,0 +1,31 @@
+<?php
+$title = 'Add new user';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('user', array('action' => 'add')));
+$form->setAttribute('class','form-horizontal');
+$form->prepare();
+?>
+<?php $formElements = array('username','password','full_name','display_name','avatar','cover_image','phone','birthday','gender','country_id','description') ?>
+<?php echo $this->form()->openTag($form); ?>
+<?php echo $this->formRow($form->get('id')); ?>
+<table class="grid">
+    <?php foreach($formElements as $formElement): ?>
+    <tr>
+        <th style="width: 20%;"><?php echo $this->formLabel($form->get($formElement)); ?></th>
+        <td>
+            <?php echo $this->formElement($form->get($formElement)); ?>
+            <?php if($this->formElementErrors($form->get($formElement))): ?>
+            <?php echo $this->formElementErrors($form->get($formElement)) ?>
+            <?php endif; ?>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+    <tr>
+        <td class="search-button" colspan="2"><?php echo $this->formElement($form->get('submit')); ?></td>
+    </tr>
+</table>
+<?php echo $this->form()->closeTag(); ?>

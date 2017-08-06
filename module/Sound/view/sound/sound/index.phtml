@@ -1,0 +1,105 @@
+<?php
+if($messages) {
+    foreach($messages as $message) {
+        echo "<div class='alert alert-success'>$message</div>";
+    }
+}
+?>
+<h1>Sound Management</h1>
+
+<?php
+$form = $this->formSearch;
+$form->setAttribute('action',$this->url('sound',array('action'=>'index')));
+$form->setAttribute('method','get');
+$form->prepare();
+?>
+<?php echo $this->form()->openTag($form); ?>
+
+<table class="grid search">
+    <tr>
+        <th class="span2"><?php echo $this->formLabel($form->get('username')); ?></th>
+        <td class="span4"><?php echo $this->formElement($form->get('username')); ?></td>
+        <th class="span2"><?php echo $this->formLabel($form->get('title')); ?></th>
+        <td class="span4"><?php echo $this->formElement($form->get('title')); ?></td>
+    </tr>
+    <tr>
+        <th><?php echo $this->formLabel($form->get('type')); ?></th>
+        <td><?php echo $this->formElement($form->get('type')); ?></td>
+        <th><?php echo $this->formLabel($form->get('connect_facebook')); ?></th>
+        <td><?php echo $this->formElement($form->get('connect_facebook')); ?></td>
+    </tr>
+    <tr>
+        <th><?php echo $this->formLabel($form->get('connect_twitter')); ?></th>
+        <td><?php echo $this->formElement($form->get('connect_twitter')); ?></td>
+        <th><?php echo $this->formLabel($form->get('category_id')); ?></th>
+        <td><?php echo $this->formElement($form->get('category_id')); ?></td>
+    </tr>
+    <tr>
+        <th><?php echo $this->formLabel($form->get('created_at')); ?></th>
+        <td><?php echo $this->formElement($form->get('created_at')); ?></td>
+        <td class="search-button" colspan="2"><?php echo $this->formElement($form->get('submit')); ?></td>
+    </tr>
+</table>
+
+<?php echo $this->form()->closeTag(); ?>
+
+<?php if($permissions['add']): ?>
+<a class="btn btn-primary add-entity" href="<?php echo $this->url('sound',array('action' => 'add')) ?>">Add</a>
+<?php endif; ?>
+
+<table class="table table-striped table-bordered">
+    <thead id="thead">
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Thumbnail</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Connect facebook</th>
+            <th>Connect twitter</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($sounds as $sound): ?>
+        <tr>
+            <td class="span1"><a href="<?php echo $this->url('sound',array('action' => 'view', 'id' => $sound->id)) ?>"><?php echo $sound->id ?></a></td>
+            <td class="span2"><?php echo $sound->title ?></td>
+            <td class="span2 text-center">
+                <?php if($sound->thumbnail): ?>
+                <a class="zoom-image" href="<?php echo $this->getS3Url($sound->thumbnail,'sound_thumbnail_path_upload') ?>">
+                <img class="image-listing" src="<?php echo $this->getS3Url($sound->thumbnail,'sound_thumbnail_path_upload') ?>" alt="sound thumbnail" />
+                </a>
+                <?php endif; ?>
+            </td>
+            <td class="span1">
+                <?php echo $sound->display_name.'</br>' ?>
+                <a href="<?php echo $this->url('user',array('action' => 'view','id' => $sound->user_id)) ?>"><?php echo $sound->username ?></a>
+            </td>
+            <td class="span1"><?php echo $this->getSoundCategories($sound->id) ?></td>
+            <td class="span1"><?php echo ($sound->type == \Sound\Model\Dto\SoundDto::SOUND_TYPE_BROADCAST) ? 'Broadcast' : 'Pending' ?></td>
+            <td class="span1"><?php echo ($sound->connect_facebook == 1) ? 'Yes' : 'No' ?></td>
+            <td class="span1"><?php echo ($sound->connect_twitter == 1) ? 'Yes' : 'No' ?></td>
+            <td class="span2">
+                <?php if($permissions['edit']): ?>
+                <a href="<?php echo $this->url('sound',array('action' => 'edit','id' => $sound->id)) ?>"><i class="icon-pencil"></i>Edit</a>
+                <?php endif; ?>
+                <?php if($permissions['delete']): ?>
+                <a class="delete" href="<?php echo $this->url('sound',array('action' => 'delete','id' => $sound->id)) ?>"><i class="icon-remove"></i>Del</a>
+                <?php endif; ?>
+                <?php if($permissions['view']): ?>
+                <a href="<?php echo $this->url('sound',array('action' => 'view','id' => $sound->id)) ?>"><i class="icon-eye-open"></i>View</a>
+                <?php endif; ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+        <?php if(!count($sounds)): ?>
+        <tr><td colspan="9">No data</td></tr>
+        <?php endif; ?>
+    </tbody>
+</table>
+
+<?php 
+    echo $this->paginationControl($this->sounds,'sliding',array('partial/paginator.phtml', 'Sound'),array('route' => 'sound'));
+?>

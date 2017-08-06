@@ -1,0 +1,84 @@
+<?php
+$title = 'View sound';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<table class="grid">
+    <tr>
+        <th style="width: 20%;">Id</th>
+        <td><?php echo $sound->id ?></td>
+    </tr>
+    <tr>
+        <th>Title</th>
+        <td><?php echo $sound->title ?></td>
+    </tr>
+    <tr>
+        <th>User display name</th>
+        <td><?php echo $sound->display_name ?></td>
+    </tr>
+    <tr>
+        <th>Category name</th>
+        <td><?php echo $this->getSoundCategories($sound->id) ?></td>
+    </tr>
+    <tr>
+        <th>Thumbnail</th>
+        <td>
+            <?php if($sound->thumbnail): ?>
+            <a class="zoom-image" href="<?php echo $this->getS3Url($sound->thumbnail,'sound_thumbnail_path_upload') ?>">
+            <img class="image-form" src="<?php echo $this->getS3Url($sound->thumbnail,'sound_thumbnail_path_upload') ?>" alt="sound thumbnail" />
+            </a>
+            <?php endif; ?>
+        </td>
+    </tr>
+    <tr>
+        <th>Sound</th>
+        <td>
+            <?php if($sound->sound_path): ?>
+            <audio controls>
+            <source src="<?php echo $this->getS3Url($sound->sound_path,'sound_file_path_upload')  ?>" type="audio/mpeg">
+            Your browser does not support the audio element.
+            </audio>
+            <?php endif; ?>
+        </td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td><?php echo $sound->description ?></td>
+    </tr>
+    <tr>
+        <th>Type</th>
+        <td><?php echo ($sound->type == \Sound\Model\Dto\SoundDto::SOUND_TYPE_BROADCAST) ? 'Broadcast' : 'Pending' ?></td>
+    </tr>
+    <tr>
+        <th>Connect facebook</th>
+        <td><?php echo ($sound->connect_facebook == 1) ? 'Yes' : 'No'  ?></td>
+    </tr>
+    <tr>
+        <th>Connect twitter</th>
+        <td><?php echo ($sound->connect_twitter == 1) ? 'Yes' : 'No' ?></td>
+    </tr>
+    <tr>
+        <th>Tags</th>
+        <td><?php echo $sound->tags ?></td>
+    </tr>
+    <tr>
+        <th>Created at</th>
+        <td><?php echo $sound->created_at ?></td>
+    </tr>
+    <tr>
+        <th>Updated at</th>
+        <td><?php echo $sound->updated_at ?></td>
+    </tr>
+    <tr>
+        <th>Other</th>
+        <td>
+            Views:<?php echo ($sound->viewed) ? : 0 ?>
+            Plays:<?php echo ($sound->played) ? : 0 ?>
+            Likes:<?php echo ($sound->likes) ? : 0 ?>
+            Comments:<?php echo ($sound->comments) ? : 0 ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><a class="btn" href="<?php echo $this->url('sound') ?>">Back</a></td>
+    </tr>
+</table>

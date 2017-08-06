@@ -1,0 +1,85 @@
+<?php
+$title = $this->translate('Permission');
+$this->headTitle($title);
+
+$form = $this->permission_form;
+$form->prepare();
+if (!empty($messages)) {
+	foreach ($messages as $message) {
+		echo '<span style="color: red;">', $message , '</span>';
+	}
+}
+
+echo $this->form()->openTag($form);
+$roleCount = count($this->roles);
+$roles = $this->roles;
+$roleName = array_shift($roles);
+?>
+<table border="1" width="100%">
+    <tr>
+        <th>&nbsp;</th>
+        <?php foreach ($this->roles as $role):?>
+        <th><?php echo $role;?></th>
+        <?php endforeach;?>
+    </tr>
+    <?php foreach ($this->data as $moduleName => $controllers):?>
+        <!--<tr>
+            <th bgcolor="greenyellow" align="left">
+                <?php echo ucfirst($moduleName);?>
+            </th>
+            <?php foreach ($this->roles as $role):?>
+                <td bgcolor="greenyellow" class="align-center">[x]</td>
+            <?php endforeach;?>
+        </tr>-->
+        <?php foreach ($controllers as $controller => $permissions):?>
+            <tr>
+                <th bgcolor="#538ed5" align="left">
+                    <?php
+                    switch ($controller) {
+                        case 'index':
+                            switch ($moduleName) {
+                                case 'application':
+                                    echo 'Home';
+                                    break;
+                                case 'permission':
+                                    echo 'Permission';
+                                    break;
+                                default:
+                                    echo ucfirst($moduleName);        
+                            }
+                            break;
+                        case 'appconfig':
+                            echo 'App config';
+                            break;
+                        case 'usersoundset':
+                            echo 'Purchase';
+                            break;    
+                        default:
+                           echo ucfirst($controller);
+                    }  
+                    ?>
+                </th>
+                <?php foreach ($this->roles as $role):?>
+                    <td bgcolor="#538ed5" class="align-center">[x]</td>
+                <?php endforeach;?>
+            </tr>
+            <?php foreach ($permissions[$roleName] as $actionName => $privileges):?>
+            <tr>
+                <td><?php echo $actionName;?></td>
+                <?php foreach ($this->roles as $role):?>               
+                <td class="align-center">
+                    <?php $elementName = "permission[$moduleName][$controller][$role][$actionName]";?>                    
+                    <?php echo $this->formRow($form->get($elementName))?>
+                </td>
+                <?php endforeach;?>
+            </tr>
+            <?php endforeach;?>
+        <?php endforeach;?>
+    <?php endforeach;?>
+</table>
+<br>
+<?php 
+echo $this->formSubmit($form->get('update'));
+echo $this->formSubmit($form->get('scan'));
+echo $this->form()->closeTag();
+?>

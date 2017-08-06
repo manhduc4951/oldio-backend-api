@@ -1,0 +1,77 @@
+<?php
+//echo $this->url()->fromRoute('user_avatar', array('file' => $user->avatar),array('force_canonical' => true));die;
+//echo '<pre>'; var_dump($user); echo '</pre>'; die;
+
+$title = 'View user';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<table class="grid">
+    <tr>
+        <th style="width: 20%;">Id</th>
+        <td><?php echo $user->id ?></td>
+    </tr>
+    <tr>
+        <th>Username</th>
+        <td><?php echo $user->username ?></td>
+    </tr>
+    <tr>
+        <th>Display Name</th>
+        <td><?php echo $user->display_name ?></td>
+    </tr>
+    <tr>
+        <th>Full name</th>
+        <td><?php echo $user->full_name ?></td>
+    </tr>
+    <tr>
+        <th>Birthday</th>
+        <td><?php echo $user->birthday ?></td>
+    </tr>
+    <tr>
+        <th>Gender</th>
+        <td><?php echo ($user->gender == \User\Model\Dto\UserDto::GENDER_MALE) ? 'Male' : 'Female' ?></td>
+    </tr>
+    <tr>
+        <th>Avatar</th>
+        <td>
+            <?php if($user->avatar): ?>
+            <a class="zoom-image" href="<?php echo $this->getS3Url($user->avatar,'user_avatar_path_upload') ?>">
+            <img class="image-form" src="<?php echo $this->getS3Url($user->avatar,'user_avatar_path_upload') ?>" alt="user avatar" />
+            </a>
+            <?php endif; ?>
+        </td>
+    </tr>
+    <tr>
+        <th>Cover Image</th>
+        <td>
+            <?php if($user->cover_image): ?>
+            <a class="zoom-image" href="<?php echo $this->getS3Url($user->cover_image,'user_cover_path_upload') ?>">
+            <img class="image-form" src="<?php echo $this->getS3Url($user->cover_image,'user_cover_path_upload') ?>" alt="user cover image" />
+            </a>
+            <?php endif; ?>
+        </td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td><?php echo $user->description ?></td>
+    </tr>
+    <tr>
+        <th>Created at</th>
+        <td><?php echo $user->created_at ?></td>
+    </tr>
+    <tr>
+        <th>Updated at</th>
+        <td><?php echo $user->updated_at ?></td>
+    </tr>
+    <tr>
+        <th>Other</th>
+        <td>Sounds:<?php echo $user->sounds ?>
+            Likes:<?php echo $user->likes ?>
+            Followings:<?php echo $user->followings ?>
+            Audiences:<?php echo $user->audiences ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><a class="btn" href="<?php echo $this->url('user') ?>">Back</a></td>
+    </tr>
+</table>

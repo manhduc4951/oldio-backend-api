@@ -1,0 +1,22 @@
+
+<?php
+$title = $this->translate('User login');
+$this->headTitle($title);
+
+$form = $this->loginForm;
+$form->setAttribute('class','form-signin');
+
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo '<h2 class="form-signin-heading">Please sign in</h2>';
+if (!empty($messages)) {
+	foreach ($messages as $message) {
+		echo '<span style="color: red;">', $message , '</span>';
+	}
+}
+echo $this->formRow($form->get('username'));
+echo $this->formRow($form->get('password'));
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();
+

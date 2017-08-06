@@ -1,0 +1,170 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+.zf-green {
+    color: #68b604;
+}
+
+.zf-blue {
+    color: #0088CC;
+}
+
+div.hero-unit {
+    padding: 113px;
+}
+
+.btn-success {
+  background-color: #57a900;
+  background-image: -moz-linear-gradient(top, #70d900, #57a900);
+  background-image: -ms-linear-gradient(top, #70d900, #57a900);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#70d900), to(#57a900));
+  background-image: -webkit-linear-gradient(top, #70d900, #57a900);
+  background-image: -o-linear-gradient(top, #70d900, #57a900);
+  background-image: linear-gradient(top, #70d900, #57a900);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#70d900', endColorstr='#57a900', GradientType=0);
+}
+
+.btn-success:hover,
+.btn-success:active,
+.btn-success.active,
+.btn-success.disabled,
+.btn-success[disabled] {
+  background-color: #57a900;
+}
+
+.btn-success:active, .btn-success.active {
+  background-color: #57a900;
+}
+
+div.container a.brand {
+    background: url("../img/zf2-logo.png") no-repeat scroll 0 7px transparent;
+    margin-left: 0;
+    padding: 8px 20px 12px 28px;
+}
+
+.navbar .nav > li > a {
+    padding: 10px 13px;
+}
+
+/*CUSTOM*/
+
+a.add-entity {
+    margin-bottom:10px;
+}
+
+#thead {
+    background-color: #006DCC;
+    background-image: linear-gradient(to bottom, #0088CC, #0044CC);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+h4.username {
+    float: right;
+    color: white;
+    font-size:12px;
+}
+
+table.grid {
+    background-color: #FFFFFF;
+    border: 1px double #000000;
+    border-collapse: collapse;
+    color: #333333;
+    font-size: 13px;
+    margin: 10px auto 0;
+    width: 100%;    
+}
+
+table.grid th {
+    background-color: #EFEFEF;
+    border: 1px solid #000000;
+    padding: 5px;
+    text-align: left;
+}
+
+table.grid td {
+    background-color: #FFFFFF;
+    border: 1px solid #000000;
+    padding: 5px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+table.grid td.search-button {
+    text-align: center;
+    border: 1px solid white !important;
+}
+
+table.search label {
+    font-size: 11px;
+}
+table.search td,th {
+    padding: 0px;
+    padding-left:5px;
+}
+table.search input[type=text],select {
+    margin-bottom: 2px;
+}
+
+.form-signin {
+    background-color: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    margin: 0 auto 20px;
+    max-width: 300px;
+    padding: 19px 29px 29px;
+}
+
+.form-signin input[type="text"], .form-signin input[type="password"] {
+    font-size: 16px;
+    height: auto;
+    margin-bottom: 15px;
+    padding: 7px 9px;
+}
+
+img.image-form {
+    max-width: 100px;
+    display:block;
+    margin-top: 10px;
+}
+img.image-listing {
+    max-width: 70px;
+}
+
+textarea {
+    width: 400px;
+    height: 100px;
+}
+
+/*
+a.show-hidden-user {
+    position: absolute;
+    left: 570px;
+}
+a.show-hidden-sound {
+    position: absolute;
+    left: 570px;
+}*/
+.search-button {
+    margin: 5px auto;
+}
+.short-form {
+    width: 87px;
+}
+select.select-country option {
+    width: 188px;
+}
+select.select-multi {
+    height: 150px;
+}
+.reset-acl {
+    margin-left: 10px;
+}
+td.text-center {
+    text-align: center !important;
+}

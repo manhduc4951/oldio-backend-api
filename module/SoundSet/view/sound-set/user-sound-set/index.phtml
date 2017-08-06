@@ -1,0 +1,84 @@
+<?php
+if($messages) {
+    foreach($messages as $message) {
+        echo "<div class='alert alert-success'>$message</div>";
+    }
+}
+?>
+<h1>User SoundSet Management</h1>
+<?php
+$form = $this->formSearch;
+$form->setAttribute('action',$this->url('user-sound-set',array('action'=>'index')));
+$form->setAttribute('method','get');
+$form->prepare();
+?>
+<?php echo $this->form()->openTag($form); ?>
+<table class="grid search">
+    <tr>
+        <th class="span2"><?php echo $this->formLabel($form->get('name')); ?></th>
+        <td class="span4"><?php echo $this->formElement($form->get('name')); ?></td>
+        <th class="span2"><?php echo $this->formLabel($form->get('user')); ?></th>
+        <td class="span4"><?php echo $this->formElement($form->get('user')); ?></td>
+    </tr>
+    <tr>
+        <th><?php echo $this->formLabel($form->get('created_at')); ?></th>
+        <td><?php echo $this->formElement($form->get('created_at')); ?></td>
+        <th><?php echo $this->formLabel($form->get('price_from')); ?></th>
+        <td>
+            <?php echo $this->formElement($form->get('price_from')); ?> to
+            <?php echo $this->formElement($form->get('price_to')); ?>
+        </td>
+    </tr>
+    <tr>
+        <td class="search-button" colspan="4"><?php echo $this->formElement($form->get('submit')); ?></td>
+    </tr>
+</table>
+<?php echo $this->form()->closeTag(); ?>
+<table class="table table-striped table-bordered">
+    <thead id="thead">
+        <tr>
+            <th>Id</th>
+            <th>SoundSet Info</th>
+            <th>SoundSet Image</th>
+            <th>User Info</th>
+            <th>User Avatar</th>
+            <th>Created at</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($userSoundSets as $userSoundSet): ?>
+        <tr>
+            <td><?php echo $userSoundSet->id ?></td>
+            <td>
+                <?php echo $userSoundSet->sound_set_name.'</br>' ?>
+                <?php echo ($userSoundSet->price && $userSoundSet->price > 0) ? $userSoundSet->price.'$' : 'Free' ?>
+            </td>
+            <td class="text-center">
+                <?php if($userSoundSet->sound_set_image): ?>
+                <a class="zoom-image" href="<?php echo $this->getS3Url($userSoundSet->sound_set_image,'sound_set_image_upload_s3') ?>">
+                <img class="image-listing" src="<?php echo $this->getS3Url($userSoundSet->sound_set_image,'sound_set_image_upload_s3') ?>" alt="soundset image" />
+                </a>
+                <?php endif; ?>
+            </td>
+            <td>
+                <?php echo $userSoundSet->display_name.'</br>'.$userSoundSet->username ?>
+            </td>
+            <td class="span2 text-center">
+                <?php if($userSoundSet->user_avatar): ?>
+                <a class="zoom-image" href="<?php echo $this->getS3Url($userSoundSet->user_avatar,'user_avatar_path_upload') ?>">
+                <img class="image-listing" src="<?php echo $this->getS3Url($userSoundSet->user_avatar,'user_avatar_path_upload') ?>" alt="user avatar" />
+                </a>
+                <?php endif; ?>
+            </td>
+            <td><?php echo $userSoundSet->created_at ?></td>    
+        </tr>
+        <?php endforeach; ?>
+        <?php if(!count($userSoundSets)): ?>
+        <tr><td colspan="6">No data</td></tr>
+        <?php endif; ?>
+    </tbody>
+</table>
+
+<?php 
+    echo $this->paginationControl($this->userSoundSets,'sliding',array('partial/paginator.phtml', 'SoundSet'),array('route' => 'user-sound-set'));
+?>

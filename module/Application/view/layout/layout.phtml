@@ -1,0 +1,62 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle($this->translate('OnlineDio'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico?v=2'))
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/css/jquery.fancybox.css')
+                        ->prependStylesheet($this->basePath() . '/css/datepicker.css')
+                        ->prependStylesheet($this->basePath() . '/css/daterangepicker-bs2.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/app.js')
+                                      ->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                                      ->prependFile($this->basePath() . '/js/jquery.fancybox.js')
+                                      ->prependFile($this->basePath() . '/js/bootstrap-datepicker.js')
+                                      ->prependFile($this->basePath() . '/js/daterangepicker.js')
+                                      ->prependFile($this->basePath() . '/js/moment.min.js')
+                                      ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+                                      ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
+
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('OnlineDio') ?></a>
+                    <!--zend navigation-->
+                    <?php $partial = array('application/navigation/topnav.phtml', 'default') ?>
+                    <?php $this->navigation('navigation')->menu()->setPartial($partial) ?>
+                    <?php echo $this->navigation('navigation')->menu()->setUlClass('nav')->render() ?>
+                    
+                    <?php $auth = new \Zend\Authentication\AuthenticationService();?>
+                    <?php if ($auth->hasIdentity()):?>
+                    <h4 class="username">Welcome: <a href="<?php echo $this->url('admin-user',array('action' => 'change-password')) ?>"><?php echo $auth->getIdentity()->username ?> </a><a href="<?php echo $this->url('auth/logout') ?>">(Logout)</a></h4>                          
+                    <?php endif; ?>
+                    <!--end zend navigation -->
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <?php echo $this->content; ?>
+            <hr>
+            <footer>
+                <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
+            </footer>
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>
